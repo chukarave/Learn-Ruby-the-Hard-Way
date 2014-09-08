@@ -32,7 +32,7 @@
      elsif how_many > 4
        puts "#{how_many} sugars???!! that's a lot! have you heard of diabetes?!"
      else
-       doom("This amount of sugar is not recommended for humans.")
+       doom("This amount of sugar is not recommended for humans.") 
      end
    end  
    
