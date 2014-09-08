@@ -23,14 +23,14 @@
      puts "Welcome to the kitchen! \\o/"
      puts "Let's put the cattle on. How many sugars do you take?"
      
-     number_input
+     how_many = number_input
      
-     if $how_many <= 1
+     if how_many <= 1
        puts "Way to go! George Orwell would have been proud: http://www.booksatoz.com/witsend/tea/orwell.htm"
-     elsif $how_many > 1 && $how_many < 4
+     elsif how_many > 1 && how_many < 4
        puts "That's close to 1 therefore close to 0, maybe you don't even need sugar? Try without it for two weeks and you'll never want sugar in your tea again!"  
-     elsif $how_many > 4
-       puts "#{$how_many} sugars???!! that's a lot! have you heard of diabetes?!"
+     elsif how_many > 4
+       puts "#{how_many} sugars???!! that's a lot! have you heard of diabetes?!"
      else
        doom("This amount of sugar is not recommended for humans.")
      end
@@ -44,12 +44,11 @@
      
      if look == "left"
       puts "Here's Max! he's an alien zomby. Do you want to..."
-      $zomby_name = "Max"
-      zomby
+      zomby("Max")
+      
      elsif look == "right"
       puts "Here's Mari! she's an alien zomby. Do you want to..."
-      $zomby_name = "Mari"
-      zomby
+      zomby("Mari")
      else 
       doom("don't look where you're not told to look") 
      end    
@@ -66,13 +65,13 @@
       num_input = $stdin.gets.chomp
       
      if num_input =~ /^[0-9]+$/
-      $how_many = num_input.to_i
+      return num_input.to_i
      else
      doom("not a number, therefore you die")
      end
    end  
      
-   def zomby
+   def zomby(zomby_name)
      puts "1. say hello"
      puts "2. attack"
      
@@ -80,10 +79,10 @@
      action = $stdin.gets.chomp
      
      if action == "1"
-      puts "#{$zomby_name} is a very nice zomby. You've made a new friend, HIGH FIVE!"
+      puts "#{zomby_name} is a very nice zomby. You've made a new friend, HIGH FIVE!"
      else
        puts "Remember your manners next time, you should always say hello."
-       doom ("#{$zomby_name} eats your brains.")
+       doom ("#{zomby_name} eats your brains.")
      end 
    end
    
