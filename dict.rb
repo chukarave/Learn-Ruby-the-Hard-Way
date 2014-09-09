@@ -24,7 +24,7 @@
     
    def Dict.get_slot(aDict, key, default=nil)
      # Returns the index, key, and value of a slot found in a bucket 
-     bucket = Dict.hash_key(aDict, key)
+     bucket = Dict.get_bucket(aDict, key)
     
      bucket.each_with_index do |kv, i|
        k, v = kv
