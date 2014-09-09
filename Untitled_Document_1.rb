@@ -1,23 +1,18 @@
- def gold_room
-   puts "This room is full of gold. How much do you take?"
-   
-   print "> "
-   choice = $stdin.gets.chomp
-   
-   if choice =~ 0 || choice =~ 1    
-    print choice
-    #how_much = choice
-   else
-     dead("Man, learn to type a number")
-   end
-   
-   if how_much < 50
-     puts "Nice, you're not greedy, you win!"
-     exit(0)
-   else
-     dead("You greedy bastard!")
-   end
- end
- 
- 
- gold_room
+class Rectangle
+  def initialize(*args)
+    if args.size < 2 || args.size > 3
+      puts 'This method takes either 2 or 3 arguments'
+    else
+      if args.size == 2
+        puts 'Two arguments'
+      else
+        puts 'Three arguments'
+      end
+    end
+  end
+end
+
+Rectangle.new([10, 23], [4, 10])
+Rectangle.new([10, 23], [14, 13], [34, 55])
+Rectangle.new(10)
+
