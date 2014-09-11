@@ -18,7 +18,7 @@ class Engine
     # variable last_scene is set to Map.next_scene with the scene name: finished meaning: if this is the last scene, I should be sent to scene 'finished'
     last_scene = @scene_map.next_scene('finished')
 
- # as long as the current scene isn't the last
+ # as long as the current scene isn't the last, set name of next scene to Map.next_scene
     while current_scene != last_scene
       next_scene_name = current_scene.enter()
       current_scene = @scene_map.next_scene(next_scene_name)
