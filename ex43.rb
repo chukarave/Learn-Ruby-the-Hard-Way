@@ -73,12 +73,12 @@ class CentralCorridor < Scene
     if action == "run"
       puts "you turn around and start running to the other direction. The Gothon however, is fater than you and is already there"   
       puts "you turn around again but it teleports itself infront of you again"
-      puts "You try to jump to the cieling, but the Gothon manages shots lasers at you."
+      puts "You try to jump to the cieling, but the Gothon manages shots EVEN-MOAR-LAZERs at you."
       puts "This was an unfortunate choice."
       return Death
 
     elsif action == "shoot"
-      puts "You pull your laser gun and aim at the Gothon."
+      puts "You pull your lazer gun and aim at the Gothon."
       puts "The Gothon splits to two Gothons!"
       puts "You manage to shoot and destroy one, but unfortunately the other one shoots and destroys you."     
       return Death
@@ -144,7 +144,7 @@ class TheBridge < Scene
 
   def enter()
     puts "You have made it to the bridge! Well done."
-    puts "Uh oh - The bridge is full of Gothons! They haven't pulled their laserguns yet, as they can see the bomb under your arm."
+    puts "Uh oh - The bridge is full of Gothons! They haven't pulled their powerful lazer guns yet, as they can see the bomb under your arm."
     puts "What do you do?"
     print ">"
 
@@ -156,9 +156,9 @@ class TheBridge < Scene
       return Death
 
     elsif action == "place the bomb on the ground"
-      puts "You aim your lasergun at the bomb. The Gothons start to sweat."
+      puts "You aim your lazer blaster at the bomb. The Gothons start to sweat."
       puts "They do not pull out their weapons on fear of setting off the bomb"
-      puts "You set the bomb gently on the ground, your laser aimed to it all along."
+      puts "You set the bomb gently on the ground, your lazer blaster aimed to it all along."
       puts "With one swing you shut the door and shoot the lock so that the Gothons can't get out."
       puts "You then quickly make your way into the excape pod."
       return EscapePod
