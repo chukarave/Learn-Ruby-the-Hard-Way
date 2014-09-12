@@ -6,25 +6,22 @@ class Scene
 end
 
 class Engine
-
-  def initialize(scene_map)
-    @scene_map = scene_map
+  def initialize()
+    #@scene_map = scene_map
   end
 
-  def play()
+  def play(scene)
     # variable current_scene is set to Map.opening_scene which in turn returns the next_scene and starts it
-    current_scene = @scene_map.opening_scene()
-    
+    #current_scene = @scene_map.opening_scene()
+    current_scene = scene
     # variable last_scene is set to Map.next_scene with the scene name: finished meaning: if this is the last scene, I should be sent to scene 'finished'
-    last_scene = @scene_map.next_scene('finished')
+    last_scene = Finished
 
- # as long as the current scene isn't the last, set name of next scene to Map.next_scene
+ # as long as the current scene isn't the last, set current schene as a new instance of the current calss
     while current_scene != last_scene
-      next_scene_name = current_scene.enter()
-      current_scene = @scene_map.next_scene(next_scene_name)
+      current_scene = current_scene.new.enter()
     end
 
-   current_scene.enter()
   end
 end
 
@@ -33,9 +30,9 @@ class Death < Scene
 
   @@quips = [
   "Wrong move! You are now dead, G'bye",
-  "I'm pretty sure you should be trying not to die. but suit yourself, goodbye", 
-  "How the heck did you manage to die again?!",
-  "Don't worry, it'll be nicer now you're in heaven. Goodbye"
+  "P.S. - I'm pretty sure you should be trying not to die. but suit yourself, goodbye", 
+  "P.S. - How the heck did you manage to die again?!",
+  "P.S. - Don't worry, it'll be nicer now you're in heaven. Goodbye"
   ]
 
   def enter()
@@ -53,25 +50,39 @@ class CentralCorridor < Scene
     puts "They mean you harm. The have destroyed your entire crew andare the last surviving crew member of the ship"
     puts "In order to survive, you should get nuetron bomb from the Weapon Armory and set it to blow once you are on the escape pod on your way to the planet below."
     puts "You are standing in the ship's central corridor"
-    puts "There is a Gothon standing in the corridor and is about to pull a weapon on you"
-    puts "What do you do?"
+    puts "A group of harm seeking Gothons is spread across the corridor." 
+    puts "What will it be, fight or flight?"
+    
     print ">"
-
     action = $stdin.gets.chomp
-
+    
+    if action == "fight"
+      Battle
+    elsif action == "flight"
+      flight
+    end  
+  end
+  
+  def flight
+    puts "Are you sure fleeing is the best option? You could try to shoot, or tell a joke. Or you could run."
+    puts "What do you really want to do? "
+    print ">"
+    action = $stdin.gets.chomp
+    
+    
     if action == "run"
       puts "you turn around and start running to the other direction. The Gothon however, is fater than you and is already there"   
       puts "you turn around again but it teleports itself infront of you again"
-      puts "You try to jump to the cieling, but the Gothon manages shots lasers at you"
+      puts "You try to jump to the cieling, but the Gothon manages shots lasers at you."
       puts "This was an unfortunate choice."
-      return 'Death'
+      return Death
 
     elsif action == "shoot"
       puts "You pull your laser gun and aim at the Gothon."
       puts "The Gothon splits to two Gothons!"
-      puts "You manage to shoot and destroy one, but unfortunately the other one shoots you"     
-      return 'Death'
-
+      puts "You manage to shoot and destroy one, but unfortunately the other one shoots and destroys you."     
+      return Death
+    
     elsif action == "tell a joke"
       puts "Lucky for you they made you learn Gothon insults in the academy."
       puts "You tell the one Gothon joke you know:"
@@ -80,11 +91,11 @@ class CentralCorridor < Scene
       puts "While it's laughing you run up and shoot it square in the head"
       puts "putting it down, then jump through the Weapon Armory door."
       puts "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-      return 'laser_weapon_armory'
-
+      return LaserWeaponArmory
+    
     else
       puts "DOES NOT COMPUTE!"
-      return 'central_corridor'
+      return CentralCorridor
     end
   end  
 end
@@ -105,25 +116,26 @@ class LaserWeaponArmory < Scene
     guess = $stdin.gets.chomp
     guesses = 0
 
-    while guesses < 10 && guess != code
+    while guesses < 10 && guess != code 
       puts "BZZZDDD! Wrong code"
+      puts "pssst! the code is #{code}"
       guesses += 1
       print "[keypad]> "
       guess = $stdin.gets.chomp
     end
 
-    if guess == code 
+    if guesses < 10 
       puts "You guessed it! You are incredibly awesome!"
       puts "Get the neutron bomb and run as fast as you can to the"
       puts "bridge where you must place it in the right spot."
-      return 'TheBridge'
+      return TheBridge
 
     else
       puts "You have tried 10 times and did not succeed"
       puts "The lock clicks and is locked for ever."
       puts "The Gothons have heard the multiple buzzes and beeps from your failed attempts and are already at the door."
       puts "You are dead."
-      return 'Death'
+      return Death
     end
   end
 end
@@ -141,7 +153,7 @@ class TheBridge < Scene
     if action == "throw the bomb"
       puts "The Gothons rush to catch the bomb and stomp each other in the process."
       puts "You try to get to the escape pod, but get stomp by a paniced Gothon trying to get to the door before you. You then die."
-      return 'Death'
+      return Death
 
     elsif action == "place the bomb on the ground"
       puts "You aim your lasergun at the bomb. The Gothons start to sweat."
@@ -149,10 +161,10 @@ class TheBridge < Scene
       puts "You set the bomb gently on the ground, your laser aimed to it all along."
       puts "With one swing you shut the door and shoot the lock so that the Gothons can't get out."
       puts "You then quickly make your way into the excape pod."
-      return 'escape_pod'
+      return EscapePod
     else
       puts "DOES NOT COMPUTE"
-      return 'the_bridge'
+      return TheBridge
     end
   end
 end
@@ -180,7 +192,7 @@ class EscapePod < Scene
       puts "The pod engine starts and you fly the hell away from this ship."
       puts "Above you, you are able to see the ship exploding. You feel the blast but are able to continue your descent into the plant."
 
-      return 'finished'
+      return Finished
     end
   end
 end
@@ -192,6 +204,7 @@ class Finished < Scene
   end
 end
 
+=begin
 class Map
   @@scenes = {
     'central_corridor' => CentralCorridor.new(),
@@ -219,8 +232,44 @@ class Map
     return next_scene(@start_scene)
   end
 end
+=end
 
+class Battle
+    
+  def enter()
+    puts "Your only option is to fight the Gothon. Choose a weapon:"
+    puts "1. Nunchaka"
+    puts "2. Moar-lazer gun"
+    puts "3. A huge jar of jam"
+    puts "4. A huge sword"
+    puts "Which number weapon do you choose?"
+    
+    print ">"
+    weapon = $stdin.gets.chomp.to_i
+    
+    if weapon == 1
+     puts "You swing the nunchaka masterfully in an intimidating display of your old-school ninja skills. One of the gothons uses it's tanticles to strangle you. You are dead."
+     puts "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+    return Death
+      
+    elsif weapon == 2
+      puts "You pull out you bigger, better, MOAR-LAZER gun. A Gothon pulls out it's EVEN-MOAR-LAZER gun and blasts yours. You are dead."
+      puts "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+    return Death
+    
+    elsif weapon == 3
+      puts 'You push the emergency "When in a jam" button on the wall. A window in the cieling opens and a huge jar of jam drops on the Gothons. They are all covered with sticky jam and cannot move. You move along, Good Job!' 
+      puts "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+     return LaserWeaponArmory   
+    
+    elsif weapon == 4
+      puts "You open a secret compartment in the wall and pull out a HUGE sword with a volcanic titanium blade and an ruby of impressive size on the hilt. Unfortunately, the sword is to heavy to swing properly and the Gothons shoot you down."
+      puts "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+     return Death 
+    end
+  end   
+end  
 
-a_map = Map.new('central_corridor')
-a_game = Engine.new(a_map)
-a_game.play()
+#a_map = Map.new('central_corridor')
+a_game = Engine.new()
+a_game.play(CentralCorridor)
