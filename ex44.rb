@@ -136,7 +136,7 @@ puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
               
 class Other
   # other class override method
-  def overrride()
+  def override()
     puts "OTHER override()"
   end
   # other class implicit method
@@ -174,7 +174,7 @@ end
 son = Child.new()
 
 son.implicit() # OTHER implicite()
-son.override() # CHILD overrride()
+son.override() # CHILD override()
 son.altered()  # CHILD, BEFORE OTHER altered()
                # OTHER altered()
                # CHILD, AFTER OTHER altered  
@@ -184,8 +184,8 @@ puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 module Other
 
-  def oveerride()
-    puts "OTHER overrride()"
+  def override()
+    puts "OTHER override()"
   end
   
   def implicit()
