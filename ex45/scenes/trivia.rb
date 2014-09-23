@@ -3,7 +3,7 @@ module Trivia
     quiz = [
       {
         question: "Which planet is closest to the sun?",
-        answers: ["Mercury", "Pluto", "Mars" "Venus"],
+        answers: ["Mercury", "Pluto", "Mars", "Venus"],
         correct: 0
       },
       {

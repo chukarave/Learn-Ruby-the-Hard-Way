@@ -14,11 +14,11 @@ module Wall
         d = $stdin.gets.chomp
               
         i = 0
-        while i < 9
-        i += 1
-        puts "Not there yet, try digging some more.\n"
-        print ">"
-        d = $stdin.gets.chomp
+        while i < 7
+          i += 1
+          puts "Not there yet, try digging some more.\n"
+          print ">"
+          d = $stdin.gets.chomp
         end
        
         puts "You made it! You are on the other side of the wall!"
@@ -32,8 +32,8 @@ module Wall
         puts "As you look around you realise it had brought you to your starting point outside the forest."
         puts "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
         sleep 4
-        Beginning::enter
-        exit
+        return Beginning
+        
       end
    end
  end     

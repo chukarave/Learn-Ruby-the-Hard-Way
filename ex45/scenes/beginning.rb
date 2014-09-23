@@ -8,13 +8,13 @@ module Beginning
     action = $stdin.gets.chomp
     
     if action == "Right" || action == "right"
-    Tree::enter
+      return Tree
     elsif action == "Left" || action == "left"
-    Racoon::enter
+      return Racoon
     else 
-    puts "You must choose left or right. There is no inbetween!"
-    (0..2).each {|x| puts "++++++++++"; sleep 1}
-    self.enter
+      puts "You must choose left or right. There is no inbetween!"
+      (0..2).each {|x| puts "++++++++++"; sleep 1}
+      self.enter
     end
   end
 end

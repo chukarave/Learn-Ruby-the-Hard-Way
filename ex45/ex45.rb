@@ -8,6 +8,4 @@ require "./scenes/wall.rb"
 require "./scenes/scotfree.rb"
 
 
-a_round = Engine.new()
-a_round.play(Beginning)
-
+Engine::play(Beginning)

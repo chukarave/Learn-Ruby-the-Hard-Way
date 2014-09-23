@@ -25,7 +25,7 @@ module Swamp
       elsif step >= 15
         step.times {|i| print "EE "; sleep(0.40)}
         puts "\nYou made it through the swamps! Good on you!" 
-        ScotFree::enter
+        return ScotFree
       end  
     end
     steps
