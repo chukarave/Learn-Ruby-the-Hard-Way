@@ -12,7 +12,7 @@ module Wall
         puts "enter the letter D to dig"
         print ">"
         d = $stdin.gets.chomp
-              
+        # the user will have to print D (or whatever, not verifying that) for 7 times before continuing      
         i = 0
         while i < 7
           i += 1
@@ -23,7 +23,7 @@ module Wall
        
         puts "You made it! You are on the other side of the wall!"
         puts "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-        ScotFree::enter
+        ScotFree::enter # move to Scotfree scene
       elsif user_action == "2" 
         puts "You walk along the wall. It\'s long and the walk is taking a while."
         sleep 4
@@ -32,7 +32,7 @@ module Wall
         puts "As you look around you realise it had brought you to your starting point outside the forest."
         puts "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
         sleep 4
-        return Beginning
+        return Beginning # start from beginning
         
       end
    end

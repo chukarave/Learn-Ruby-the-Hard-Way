@@ -1,5 +1,7 @@
 module Trivia
   def self.run
+    #quiz is an array of small Hashmaps which contain 3 key - value pairs, one of them an array by itself.
+    
     quiz = [
       {
         question: "Which planet is closest to the sun?",
@@ -38,21 +40,21 @@ module Trivia
       }
     ]
     
-    current = quiz.sample
+    current = quiz.sample   
     
-    puts current[:question]
+    puts current[:question]                   # puts a random question
     
-    current[:answers].each_index do |i|
-      puts "#{i+1}: #{current[:answers][i]}"  
-    end
+    current[:answers].each_index do |i|       # puts the answers array with corresponding numbers.       
+      puts "#{i+1}: #{current[:answers][i]}"  # i+1 so the answers numbering displayed to the user
+    end                                       # will begin with 1 and not with 0 like the array index  
     
     input = $stdin.gets.chomp.to_i
     
-    if input -1 == current[:correct]
+    if input -1 == current[:correct]    # correct contains the index numbering therefore input needs to be converted back to -1
       return true
     else
-      return false
-    end
+      return false       # The module waiting on this return is Racoon. it will use the output to continue 
+    end                  # to the next scene 
   end
 end
 

@@ -6,8 +6,9 @@ module Racoon
         
     until Trivia::run 
       puts '"Wrong!" screams the racoon, drunk with power. "You must answer correctly in order to pass! Here\'s another one:"'
+      puts
     end
-    
+      # until Trivia returns true. then the following code will be executed  
       puts 'The racoon stares at the ground. "You may now continue through the forest." He says, defeatedly. "May you reach your goal safely. I really have to find more difficult questions."'
       puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     return Wall
