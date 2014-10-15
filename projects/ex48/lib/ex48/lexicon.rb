@@ -10,7 +10,7 @@ module Lexicon
      result.push(scan_word(x)) 
    end
    # each element from 'words' is pushed in the 'result' array while calling the scan_word method
-   return result # the method .scan called in the test returns the 'result' array
+   puts result # the method .scan called in the test returns the 'result' array
    
   end
   
@@ -25,7 +25,8 @@ module Lexicon
   def self.get_word_type(word)
     begin
       Integer(word)
-      return 'number'       # convert word into integer. as long as no exception was thrown, the returned type would be 'number' 
+      return 'number'       
+                            # convert word into integer. as long as no exception was thrown, the      returned type would be 'number' 
     rescue                  # if the word could not be converted into an integer, the rescue makes ruby jump to the next bit of code.
      # nothing happens 
     end
@@ -59,7 +60,8 @@ module Lexicon
     ],
      "noun" => [ 
        'bear',
-       'princess' 
+       'princess',
+       'bubblegum' 
            ]
   }
   
