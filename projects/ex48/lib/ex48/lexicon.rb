@@ -10,8 +10,8 @@ module Lexicon
      result.push(scan_word(x)) 
    end
    # each element from 'words' is pushed in the 'result' array while calling the scan_word method
-   puts result # the method .scan called in the test returns the 'result' array
-   
+   # the method .scan called in the test returns the 'result' array
+   return result
   end
   
   def self.scan_word(word)

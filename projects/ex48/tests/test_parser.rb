@@ -1,11 +1,10 @@
-require "ex48/lexicon.rb"
 require "ex48/parser.rb"
 require "test/unit"
 
 class TestPARSER < Test::Unit::TestCase
   
 
-  def test_parse_verb_equal()
+  def test_parse_verb_after_stop_word()
     result = Parser.parse_verb([['stop', 'the'], 
               ['verb', 'go'],
               ['direction', 'north']])
@@ -60,20 +59,40 @@ class TestPARSER < Test::Unit::TestCase
   end
   
   def test_skip_equal()
-    list = [['verb', 'go'], ['stop', 'of'], ['noun', 'bear']]
-    Parser.skip(list, 'verb')
+    list = [['verb', 'go'], ['blabla', 'of'], ['noun', 'bear']]
+    Parser.skip(list, ['verb', 'blabla'])
     
-    assert_equal(list.length, 2)
+    assert_equal(list.length, 1)
   end
   
+  def test_parse_number_equal()
+    result = Parser.parse_number([['stop', 'at'], ['number', 2]])
+    
+    assert_equal(result, ['number', 2])
+  end
+  
+  def test_parse_number_raise()
+  end
   
   def test_parse_sentence()
     result = Parser.parse_sentence([['stop', 'of'], ['noun', 'bear'], 
                                     ['verb', 'go'], ['direction', 'south'],
                                     ['stop', 'at'], ['verb', 'kill']])
-    assert_equal(result.subject, "bear")
-    assert_equal(result.verb, "go")
-    assert_equal(result.object, "south")
+    assert_equal(result.subject, ['noun', 'bear'])
+    assert_equal(result.verb, ['verb', 'go'])
+    assert_equal(result.number, ['number', 1])
+    assert_equal(result.object, ['direction', 'south'])
+  end
+  
+  def test_parse_sentence_with_number()
+    result = Parser.parse_sentence([['stop', 'of'], ['noun', 'bear'], 
+                                    ['verb', 'go'], ['number', 3],
+                                    ['direction', 'south'],
+                                    ['stop', 'at'], ['verb', 'kill']])
+    assert_equal(result.subject, ['noun', 'bear'])
+    assert_equal(result.verb, ['verb', 'go'])
+    assert_equal(result.number, ['number', 3])
+    assert_equal(result.object, ['direction', 'south'])
   end
 end
 

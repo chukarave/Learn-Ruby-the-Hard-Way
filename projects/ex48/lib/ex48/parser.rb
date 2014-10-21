@@ -3,14 +3,16 @@ end
 
 class Sentence 
 
-  def initialize(subject, verb, obj)
-    @subject = subject[1]   # create class variables 
-    @verb = verb[1]
-    @object = obj[1]
+  def initialize(subject, verb, num, obj)
+    @subject = subject   # create class variables 
+    @verb = verb
+    @number = num
+    @object = obj
   end    
   
   attr_reader :subject
   attr_reader :verb
+  attr_reader :number
   attr_reader :object  # makes the variable accessible from outside the class 
 end
 
@@ -38,7 +40,11 @@ module Parser
   end
   
   def self.skip(word_list, word_type) # skips any word that is not a noun or verb
-    while peek(word_list) == word_type
+    if String === word_type
+      word_type = [word_type]
+    end  
+    
+    while word_type.include? peek(word_list) 
       match(word_list, word_type)
     end
   end
@@ -79,12 +85,30 @@ module Parser
     end      
   end
   
+  def self.parse_number(word_list)
+    skip(word_list, 'stop')
+    next_word = peek(word_list)
+    
+    if next_word == 'number'
+     return match(word_list, 'number')
+    
+    else 
+      raise ParserError.new('Expected a number next') 
+    end 
+  end
+  
+  
   def self.parse_sentence(word_list)
     subj = parse_subject(word_list)
     verb = parse_verb(word_list)
+    begin    
+      num = parse_number(word_list)
+    rescue ParserError => error    # variable to put the exception in
+      num = ['number', 1]
+    end
     obj = parse_object(word_list)
     
-    return Sentence.new(subj, verb, obj)
+    return Sentence.new(subj, verb, num, obj)
   end
 end
 
