@@ -1,5 +1,9 @@
 require "sinatra"
 
+class MyAppError < Exception
+end
+
+
 set :port, 8080
 set :static, true
 set :public_folder, "static"
@@ -20,7 +24,7 @@ post '/hello/' do   # post indicates that a form will be recieved.
   tempfile = params[:file][:tempfile]
   filename = params[:file][:filename]
   FileUtils.copy(tempfile.path, "./static/#{filename}")
-  
+
   erb :index2, :locals => {'greeting' => greeting, 
                           'name' => name, 
                            'filename' => filename, 
