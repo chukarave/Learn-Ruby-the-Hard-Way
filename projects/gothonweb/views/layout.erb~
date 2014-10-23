@@ -11,36 +11,30 @@ h1 {
 p  {
     color:red;
     font-family:courier;
-    font-size:160%;
+    font-size:160% 
+    border:1px solid black;
+    padding:10px;
     text-align: center;
 }
 pre {
-    color:#333;
+    color:grey;
     font-family:courier;
-    font-size:130%;
+    font-size:160% 
     text-align: center;
 }
 form {
     color:grey;
     font-family:courier;
-    font-size:160%;
-    padding:10px;
+    font-size:160% 
     text-align: center;
-
-}
-
-.hidden {
-    display: none;
 }
    
 </style>
 </head>
-<body  style="background-color:orange">
+<body>
 
 <%= yield %>
 
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="/script.js"></script>
 </body>
 </html>
 

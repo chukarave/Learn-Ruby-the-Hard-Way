@@ -1,30 +1,36 @@
-require 'sinatra'
+#require 'sinatra'
 
-enable :sessions
+#enable :sessions
 
 module Map 
 
- class Room
-    
-    def initialize(name, description)
+  class Room
+
+    def initialize(name, description, help)
       @name = name
       @description = description
+      @help = help
       @paths = {}
     end
-  
-  
-  attr_reader :name
-  attr_reader :paths
-  attr_reader :description
- 
+
+
+    attr_reader :name
+    attr_reader :paths
+    attr_reader :description
+    attr_reader :help
+
     def go(direction)
+      unless @paths.has_key? direction
+        raise WrongAnswer.new()
+      end
+
       return @paths[direction]
     end
- 
+
     def add_paths(paths)
       @paths.update(paths)
     end
-  
+
   end
 
   CENTRAL_CORRIDOR = Room.new('Central Corridor', """
@@ -38,7 +44,7 @@ module Map
     a Gothon jumps out, red scaly skin, dark grimy teeth, and evil clown costume
     flowing around his hate filled body.  He's blocking the door to the
     Armory and about to pull a weapon to blast you.
-    """)
+    """, "What do you do?\n One possibility would be to shoot.\nAnother option is to dodge.\nOr you can always tell a joke.")
 
   LASER_WEAPON_ARMORY = Room.new('Laser Weapon Armory', """
     Lucky for you they made you learn Gothon insults in the academy.
@@ -55,7 +61,7 @@ module Map
     and you need the code to get the bomb out.  If you get the code
     wrong 10 times then the lock closes forever and you can't
     get the bomb.  The code is 3 digits.
-    """)
+    """, "What do you do?\nEnter any 3 digit code and it should work!\nOr maybe just use 0132.")
 
   THE_BRIDGE = Room.new("The Bridge", """
     The container clicks open and the seal breaks, letting gas out.
@@ -68,7 +74,7 @@ module Map
     clown costume than the last.  They haven't pulled their
     weapons out yet, as they see the active bomb under your
     arm and don't want to set it off.
-    """)
+    """, "What do you do?\nthrow the bomb\nslowly place the bomb.")
 
   ESCAPE_POD = Room.new('Escape pod', """
     You point your blaster at the bomb under your arm
@@ -87,7 +93,7 @@ module Map
     now need to pick one to take.  Some of them could be damaged
     but you don't have time to look.  There's 5 pods, which one
     do you take?
-    """)
+    """, "What do you do?\nChoose pod number *\nChoose pod number 2")
 
   THE_END_WINNER = Room.new("The End", """
     You jump into pod 2 and hit the eject button.
@@ -96,21 +102,22 @@ module Map
     back and see your ship implode then explode like a
     bright star, taking out the Gothon ship at the same
     time.  You won!
-    """)
+    """, "You don't need any help. You won!")
+ 
 
   THE_END_LOSER = Room.new('The End', """
     You jump into a random pod and hit the eject button.
     The pod escapes out into the void of space, then
     implodes as the hull ruptures, crushing your body
     into jam jelly.
-    """)
+    """, "No hope except maybe trying again.")
 
   ESCAPE_POD.add_paths({
 	'2' => THE_END_WINNER,
 	'*' => THE_END_LOSER
 })
 
-  GENERIC_DEATH = Room.new("death", "You died.")
+  GENERIC_DEATH = Room.new("death", "You died.", "Too late, no one can help you.")
 
   THE_BRIDGE.add_paths({
 	'throw the bomb' => GENERIC_DEATH,
@@ -123,8 +130,8 @@ module Map
 })
   
   CENTRAL_CORRIDOR.add_paths({
-        'shoot!' => GENERIC_DEATH,
-	'dodge!' => GENERIC_DEATH,
+        'shoot' => GENERIC_DEATH,
+	'dodge' => GENERIC_DEATH,
 	'tell a joke' => LASER_WEAPON_ARMORY
 })
 

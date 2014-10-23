@@ -1,6 +1,9 @@
 require 'sinatra'
 require './lib/gothonweb/map.rb'
 
+class WrongAnswer < Exception
+end
+
 set :port, 8080
 set :static, true
 set :public_folder, "static" 
@@ -17,7 +20,7 @@ get '/game' do
   room = Map::load_room(session)
 
   if room
-      erb :show_room, :locals => {:room => room}  
+      erb :show_room, :locals => {:room => room, :wrong => false}  
   else
       erb :you_died
   end
@@ -28,7 +31,11 @@ post '/game' do
   action = params[:action]
 
   if room
-    next_room = room.go(action) || room.go("*")
+    begin
+      next_room = room.go(action) || room.go("*")
+    rescue WrongAnswer => w
+      return erb :show_room, :locals => {:room => room, :wrong => true}  
+    end
      	
     if next_room
       Map::save_room(session, next_room)

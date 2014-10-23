@@ -1,15 +1,29 @@
 <h1> <%= room.name %> </h1>
 
-<pre>
+<pre><i>
 <%= room.description %>
+</i>
 </pre>
+   
+        <% if room.name == "death" || room.name == "The End"%>
+        	<p><a href="/">Play Again?</a></p> 
+        <% else %>
+		<% if wrong %>
+			<p>Your answer was wrong!</p>
+		<% end %>
+	        <p>
+	          <form action="/game" method="POST"> 
+			  <input type="text" name="action">
+			  <input type= "SUBMIT">
+              </form>
+	        </p> 
+        <% end %>	 
+<a href="#" class="toggle_help">Show help</a>
+<pre class="help_text hidden">
+<%= room.help%>
 
-<% if room.name == "death" || room.name == "The End"%>
-	<p><a href="/">Play Again?</a></p> 
-<% else %>
-	<p>
-	<form action="/game" method="POST"> 
-     	    - <input type="text" name="action"> <input type= "SUBMIT">
-        </form>
-	</p> 
-<% end %>	    
+</pre>       
+        
+    <p>
+<img src="/Ruby_logo.png" alt="Ruby logo" width="125" height="142">
+    <p>  
